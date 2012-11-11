@@ -11,6 +11,7 @@ namespace PomodoroSkype
     public partial class MainForm : Form
     {
         private const int PomadoroDurationInSec = 1500;
+
         private const string PomadoroTemplateFileName = "pomadoroSkype.ini";
 
         private bool _isPomadoroInProgress;
@@ -35,9 +36,11 @@ namespace PomodoroSkype
         }
 
         private void DisplayTimeEvent(object source, ElapsedEventArgs e)
-        {
+        {            
             _pomadoroTime -= 1;
             SetTimerText(SecToFormattedTime(_pomadoroTime));
+
+            if (_pomadoroTime == 0) StopTimer();
         }
 
         private void SetTimerText(string text)
@@ -86,12 +89,7 @@ namespace PomodoroSkype
         {
             if (_isPomadoroInProgress)
             {
-                _isPomadoroInProgress = false;
-                _taskTimer.Stop();
-
-                SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusOnline);
-
-                btnRun.Text = Resources.MainForm_StartTimer_Run;
+                StopTimer();
             }
             else
             {
@@ -103,6 +101,16 @@ namespace PomodoroSkype
 
                 btnRun.Text = Resources.MainForm_StartTimer_Stop;
             }
+        }
+
+        private void StopTimer()
+        {
+            _isPomadoroInProgress = false;
+            _taskTimer.Stop();
+
+            SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusOnline);
+
+            btnRun.Text = Resources.MainForm_StartTimer_Run;    
         }
 
         #region Nested type: SetTextCallback
