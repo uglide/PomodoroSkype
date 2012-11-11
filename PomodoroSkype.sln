@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomadoroSkype", "PomadoroSkype\PomadoroSkype.csproj", "{69B23D8A-A5AD-4A2B-9D43-87F5F99FFD6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomodoroSkype", "PomodoroSkype\PomodoroSkype.csproj", "{69B23D8A-A5AD-4A2B-9D43-87F5F99FFD6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

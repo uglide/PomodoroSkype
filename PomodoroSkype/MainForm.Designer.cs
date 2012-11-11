@@ -1,4 +1,4 @@
-﻿namespace PomadoroSkype
+﻿namespace PomodoroSkype
 {
     partial class MainForm
     {
@@ -62,7 +62,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PomadoroSkype";
+            this.Text = "PomodoroSkype";
             this.TransparencyKey = System.Drawing.Color.Silver;
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.ResumeLayout(false);

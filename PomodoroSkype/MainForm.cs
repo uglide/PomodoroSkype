@@ -2,11 +2,11 @@
 using System.IO;
 using System.Timers;
 using System.Windows.Forms;
-using PomadoroSkype.Properties;
+using PomodoroSkype.Properties;
 using SKYPE4COMLib;
 using Timer = System.Timers.Timer;
 
-namespace PomadoroSkype
+namespace PomodoroSkype
 {
     public partial class MainForm : Form
     {

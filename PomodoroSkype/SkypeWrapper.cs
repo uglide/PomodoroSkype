@@ -1,7 +1,7 @@
 ﻿using System;
 using SKYPE4COMLib;
 
-namespace PomadoroSkype
+namespace PomodoroSkype
 {
     internal class SkypeWrapper
     {
