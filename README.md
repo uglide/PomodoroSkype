@@ -1,7 +1,7 @@
 PomodoroSkype
 =============
 
-Simple opensource pomadoro timer with integration to Skype
+Simple opensource pomodoro timer with integration to Skype
 
 System Requirements
 ====================
