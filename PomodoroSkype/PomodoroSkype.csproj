@@ -37,8 +37,19 @@
     <ApplicationIcon>mouse.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiveButtons">
+      <HintPath>.\ActiveButtons.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +58,46 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wunderkinder.WunderBrake, Version=1.0.2.44, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.WunderBrake.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Business, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Business.Contracts, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Business.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Business.Entities, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Business.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Business.Migration, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Business.Migration.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Business.Sync, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Business.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Common, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Common.Localization, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Common.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Data.LocalStorage, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Data.LocalStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Wunderkinder.Wunderlist.Data.WunderAPI, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Wunderkinder.Wunderlist.Data.WunderAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainForm.cs">
@@ -54,6 +105,9 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Timer.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mouse.ico" />
+    <Compile Include="Resources\digital-7mono.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <None Include="Resources\link.png" />
+    <None Include="Resources\pin12.png" />
+    <None Include="Resources\pin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

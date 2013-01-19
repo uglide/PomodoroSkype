@@ -1,46 +1,126 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Timers;
 using System.Windows.Forms;
 using PomodoroSkype.Properties;
 using SKYPE4COMLib;
-using Timer = System.Timers.Timer;
+using TheCodeKing.ActiveButtons.Controls;
+using WLStorage = Wunderkinder.Wunderlist.Data.LocalStorage;
+using Timer = PomodoroSkype.Models.Timer;
 
 namespace PomodoroSkype
 {
     public partial class MainForm : Form
     {
+        /*
+         * Pomodoro length in seconds
+         * TODO: move to application settings
+         */
         private const int PomadoroDurationInSec = 1500;
 
+        /**
+         * Pomodoro Timer Model
+         */
+        private Timer _taskTimer;
+
+        /*
+         * File where stored message template for Skype auto responds  
+         */
         private const string PomadoroTemplateFileName = "pomadoroSkype.ini";
 
-        private bool _isPomadoroInProgress;
+        /*
+         * Message template for Skype auto responds   
+         */
         private string _messageTemplate;
-        private int _pomadoroTime;
-        private Timer _taskTimer;
+        
 
         public MainForm()
         {
             InitializeComponent();
         }
 
+        #region InitApplication
         private void MainFormLoad(object sender, EventArgs e)
+        {
+            InitSkypeAutoRespond();            
+            InitTimer();
+            CreateTopButtons();
+        }
+
+        private void InitSkypeAutoRespond()
         {
             SkypeWrapper.Instance.Start();
             SkypeWrapper.Instance.OnNewMessage += OnNewMessage;
 
+            // load template from file
             _messageTemplate = File.ReadAllText(PomadoroTemplateFileName);
+        }
 
-            _taskTimer = new Timer {Interval = 1000};
-            _taskTimer.Elapsed += DisplayTimeEvent;
+        private void InitTimer()
+        {
+            _taskTimer = new Timer();
+            _taskTimer.OnTick += DisplayTimeEvent;
+            _taskTimer.TimeElapsed += StopTimer;
+        }
+        #endregion
+
+        #region TopButtons
+
+        private void CreateTopButtons()
+        {
+            IActiveMenu menu = ActiveMenu.GetInstance(this);
+            ActiveButton button = new ActiveButton() { Image = Resources.pin12 };
+            button.Click += setOnTopClick;
+            menu.Items.Add(button);
+
+            ActiveButton linkButton = new ActiveButton() { Image = Resources.link };
+            linkButton.Click += openRepoLinkClick;
+
+            menu.Items.Add(linkButton); 
+        }
+
+        private void setOnTopClick(object sender, EventArgs e)
+        {
+            /*
+             * TODO: implement set on top
+             */
+        }
+
+        private void openRepoLinkClick(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/uglide/PomodoroSkype");
+        }
+
+        #endregion
+
+        #region Timer Handlers
+
+        private void StartTimer(object sender, EventArgs e)
+        {
+            if (_taskTimer.IsRunning())
+            {
+                _taskTimer.Stop();
+            }
+            else
+            {
+                _taskTimer.Start(PomadoroDurationInSec);
+
+                SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusDoNotDisturb);
+
+                btnRun.Text = Resources.MainForm_StartTimer_Stop;
+            }
+        }
+
+        private void StopTimer(object sender, ElapsedEventArgs args)
+        {
+            SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusOnline);
+            btnRun.Text = Resources.MainForm_StartTimer_Run;
         }
 
         private void DisplayTimeEvent(object source, ElapsedEventArgs e)
         {            
-            _pomadoroTime -= 1;
-            SetTimerText(SecToFormattedTime(_pomadoroTime));
-
-            if (_pomadoroTime == 0) StopTimer();
+            SetTimerText(_taskTimer.GetTime());
         }
 
         private void SetTimerText(string text)
@@ -64,56 +144,27 @@ namespace PomodoroSkype
             }
         }
 
-        private string SecToFormattedTime(int sec)
-        {
-            int min = sec/60;
-            return String.Format("{0,2:D2}", min) + ":" + String.Format("{0,2:D2}", (sec - min*60));
-        }
+        #endregion
+
+        #region Message Handlers
 
         private void OnNewMessage(object sender, NewMessageArgs args)
         {
-            if (!_isPomadoroInProgress) return; //no actions if timer not running
+            //no actions if timer not running
+            if (!_taskTimer.IsRunning()) return; 
 
             SkypeWrapper.Instance.SendMessage(
-                args.Message.ChatName, GetBusyMessage(args.Message.Sender)
-                );
+                args.Message.ChatName, 
+                GetBusyMessage(args.Message.Sender)
+            );
         }
 
         private string GetBusyMessage(User sender)
         {
-            return _messageTemplate.Replace("%TIME%", SecToFormattedTime(_pomadoroTime))
+            return _messageTemplate
+                .Replace("%TIME%", _taskTimer.GetTime())
                 .Replace("%SENDER_NAME%", sender.FullName);
         }
-
-        private void StartTimer(object sender, EventArgs e)
-        {
-            if (_isPomadoroInProgress)
-            {
-                StopTimer();
-            }
-            else
-            {
-                _isPomadoroInProgress = true;
-                _taskTimer.Start();
-                _pomadoroTime = PomadoroDurationInSec;
-
-                SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusDoNotDisturb);
-
-                btnRun.Text = Resources.MainForm_StartTimer_Stop;
-            }
-        }
-
-        private void StopTimer()
-        {
-            _isPomadoroInProgress = false;
-            _taskTimer.Stop();
-
-            SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusOnline);
-
-            btnRun.Text = Resources.MainForm_StartTimer_Run;    
-        }
-
-        #region Nested type: SetTextCallback
 
         private delegate void SetTextCallback(string text);
 
