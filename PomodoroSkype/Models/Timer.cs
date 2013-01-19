@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Timers;
 
 namespace PomodoroSkype.Models
 {
@@ -10,9 +8,28 @@ namespace PomodoroSkype.Models
         private int _timeInSec = 0;
         private bool _timerRunning = false;
 
+        public delegate void TimeElapsedEventHandler(object sender, ElapsedEventArgs e);
+
+        public event TimeElapsedEventHandler TimeElapsed;
+        public event TimeElapsedEventHandler OnTick;
+
         public Timer()
         {
             Interval = 1000;
+            Elapsed += DecreaseTime;
+        }
+
+        private void DecreaseTime(object source, ElapsedEventArgs e)
+        {
+            _timeInSec--;
+
+            if (_timeInSec == 0)
+            {
+                Stop();                
+            } else
+            {
+                OnTick(this, (ElapsedEventArgs)null);
+            }
         }
 
         public void Start(int timeIntervalInSec)
@@ -22,20 +39,31 @@ namespace PomodoroSkype.Models
             base.Start();            
         }
 
-        public void Stop()
+        public new void Stop()
         {
             _timerRunning = false;
             base.Stop();
+            TimeElapsed(this, (ElapsedEventArgs)null);
         }
 
-        public string getTime()
+        public string GetTime()
         {
             TimeSpan t = TimeSpan.FromSeconds(_timeInSec);
 
-            return string.Format("{1:D2}m:{2:D2}s",     			
+            return string.Format("{0:D2}:{1:D2}",     			
     			t.Minutes, 
     			t.Seconds
             );
+        }
+
+        public int GetSeconds()
+        {
+            return _timeInSec;
+        }
+
+        public bool IsRunning()
+        {
+            return _timerRunning;
         }
 
     }
