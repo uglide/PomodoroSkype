@@ -35,39 +35,27 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(125, 4);
+            resources.ApplyResources(this.btnRun, "btnRun");
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(70, 32);
-            this.btnRun.TabIndex = 0;
-            this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.StartTimer);
             // 
             // lbTimer
             // 
-            this.lbTimer.AutoSize = true;
-            this.lbTimer.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbTimer.Location = new System.Drawing.Point(4, 4);
+            resources.ApplyResources(this.lbTimer, "lbTimer");
             this.lbTimer.Name = "lbTimer";
-            this.lbTimer.Size = new System.Drawing.Size(83, 32);
-            this.lbTimer.TabIndex = 2;
-            this.lbTimer.Text = "25:00";
             // 
             // MainForm
             // 
             this.AcceptButton = this.btnRun;
+            resources.ApplyResources(this, "$this");
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(202, 45);
             this.Controls.Add(this.lbTimer);
             this.Controls.Add(this.btnRun);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PomodoroSkype";
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
