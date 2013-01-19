@@ -81,10 +81,8 @@ namespace PomodoroSkype
         }
 
         private void setOnTopClick(object sender, EventArgs e)
-        {
-            /*
-             * TODO: implement set on top
-             */
+        {            
+            TopMost = !TopMost;
         }
 
         private void openRepoLinkClick(object sender, EventArgs e)
