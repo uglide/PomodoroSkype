@@ -27,7 +27,7 @@ namespace PomodoroSkype
         /*
          * File where stored message template for Skype auto responds  
          */
-        private const string PomadoroTemplateFileName = "pomadoroSkype.ini";
+        private const string PomadoroTemplateFileName = "pomodoroSkype.ini";
 
         /*
          * Message template for Skype auto responds   
