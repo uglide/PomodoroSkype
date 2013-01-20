@@ -124,10 +124,16 @@
   <data name="MainForm_StartTimer_Stop" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="MainForm_Wunderlist_Not_Installed" xml:space="preserve">
+    <value>Wunderlist2 not installed! Please install Wunderlist and restart this application!</value>
+  </data>
   <data name="pin12" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MainForm_StartTimer_Run" xml:space="preserve">
     <value>Run</value>
+  </data>
+  <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

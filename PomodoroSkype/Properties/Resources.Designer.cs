@@ -60,6 +60,13 @@ namespace PomodoroSkype.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap config {
+            get {
+                object obj = ResourceManager.GetObject("config", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
@@ -75,6 +82,15 @@ namespace PomodoroSkype.Properties {
         internal static string MainForm_StartTimer_Stop {
             get {
                 return ResourceManager.GetString("MainForm_StartTimer_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wunderlist2 not installed! Please install Wunderlist and restart this application!.
+        /// </summary>
+        internal static string MainForm_Wunderlist_Not_Installed {
+            get {
+                return ResourceManager.GetString("MainForm_Wunderlist_Not_Installed", resourceCulture);
             }
         }
         
