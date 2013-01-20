@@ -30,15 +30,15 @@
         {
             this.lbTaskAdd = new System.Windows.Forms.Label();
             this.lbList = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbTaskLists = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cbTasks = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nudEstimation = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEstimation)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,14 +62,18 @@
             this.lbList.TabIndex = 1;
             this.lbList.Text = "List";
             // 
-            // comboBox1
+            // cbTaskLists
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(96, 59);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(217, 25);
-            this.comboBox1.TabIndex = 2;
+            this.cbTaskLists.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbTaskLists.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTaskLists.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbTaskLists.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbTaskLists.FormattingEnabled = true;
+            this.cbTaskLists.Location = new System.Drawing.Point(96, 59);
+            this.cbTaskLists.Name = "cbTaskLists";
+            this.cbTaskLists.Size = new System.Drawing.Size(217, 25);
+            this.cbTaskLists.TabIndex = 2;
+            this.cbTaskLists.SelectedIndexChanged += new System.EventHandler(this.cbTaskLists_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -81,14 +85,17 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Task";
             // 
-            // comboBox2
+            // cbTasks
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(96, 96);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(217, 25);
-            this.comboBox2.TabIndex = 4;
+            this.cbTasks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbTasks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTasks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbTasks.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbTasks.FormattingEnabled = true;
+            this.cbTasks.Location = new System.Drawing.Point(96, 96);
+            this.cbTasks.Name = "cbTasks";
+            this.cbTasks.Size = new System.Drawing.Size(217, 25);
+            this.cbTasks.TabIndex = 4;
             // 
             // label2
             // 
@@ -100,24 +107,25 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Estimation";
             // 
-            // numericUpDown1
+            // nudEstimation
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.numericUpDown1.Location = new System.Drawing.Point(96, 138);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nudEstimation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.nudEstimation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.nudEstimation.Location = new System.Drawing.Point(96, 138);
+            this.nudEstimation.Maximum = new decimal(new int[] {
             8,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.nudEstimation.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(217, 25);
-            this.numericUpDown1.TabIndex = 6;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.nudEstimation.Name = "nudEstimation";
+            this.nudEstimation.Size = new System.Drawing.Size(217, 25);
+            this.nudEstimation.TabIndex = 6;
+            this.nudEstimation.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -163,12 +171,12 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.cbTaskLists);
+            this.panel1.Controls.Add(this.nudEstimation);
             this.panel1.Controls.Add(this.lbTaskAdd);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lbList);
-            this.panel1.Controls.Add(this.comboBox2);
+            this.panel1.Controls.Add(this.cbTasks);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -188,7 +196,7 @@
             this.Name = "TaskForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TaskForm";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEstimation)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -199,11 +207,11 @@
 
         private System.Windows.Forms.Label lbTaskAdd;
         private System.Windows.Forms.Label lbList;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbTaskLists;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cbTasks;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nudEstimation;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel1;

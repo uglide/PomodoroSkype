@@ -45,6 +45,7 @@
             this.colInterruptions = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.lbCurrentTask = new System.Windows.Forms.Label();
             this.btnAddTask = new System.Windows.Forms.Button();
+            this.btnConfig = new System.Windows.Forms.Button();
             this.tsTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTasks)).BeginInit();
             this.SuspendLayout();
@@ -152,7 +153,7 @@
             this.olvTasks.AllColumns.Add(this.colUnplanned);
             this.olvTasks.AllColumns.Add(this.colInterruptions);
             this.olvTasks.AutoArrange = false;
-            this.olvTasks.BackColor = System.Drawing.Color.White;
+            this.olvTasks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.olvTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.olvTasks.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
             this.olvTasks.CheckedAspectName = "";
@@ -262,6 +263,17 @@
             this.btnAddTask.UseVisualStyleBackColor = false;
             this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             // 
+            // btnConfig
+            // 
+            this.btnConfig.FlatAppearance.BorderSize = 0;
+            this.btnConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfig.Image = global::PomodoroSkype.Properties.Resources.config;
+            this.btnConfig.Location = new System.Drawing.Point(10, 391);
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.Size = new System.Drawing.Size(33, 28);
+            this.btnConfig.TabIndex = 7;
+            this.btnConfig.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnRun;
@@ -270,6 +282,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(317, 424);
+            this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.btnAddTask);
             this.Controls.Add(this.lbCurrentTask);
             this.Controls.Add(this.olvTasks);
@@ -309,6 +322,7 @@
         private System.Windows.Forms.Label lbCurrentTask;
         private System.Windows.Forms.ToolStripButton tsbtnStats;
         private System.Windows.Forms.Button btnAddTask;
+        private System.Windows.Forms.Button btnConfig;
     }
 }
 

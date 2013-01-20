@@ -11,7 +11,6 @@ using PomodoroSkype.Models;
 using PomodoroSkype.Properties;
 using SKYPE4COMLib;
 using TheCodeKing.ActiveButtons.Controls;
-using WLStorage = Wunderkinder.Wunderlist.Data.LocalStorage;
 using Timer = PomodoroSkype.Models.Timer;
 using BrightIdeasSoftware;
 
@@ -53,7 +52,28 @@ namespace PomodoroSkype
             CreateTopButtons();                       
             InitTimer();
             InitTasksList();
+            InitWlIntegration();
             InitSkypeAutoRespond();           
+        }
+
+        private void InitWlIntegration()
+        {
+            /*
+             * Try find Wunderlist db
+             */
+            if (!WlDataReader.IsWunderListInstalled())
+            {
+               MessageBox.Show(
+                   Properties.Resources.MainForm_Wunderlist_Not_Installed
+               );
+                Close();                
+            }
+
+            //load data to reader
+            WlDataReader.LoadData();
+
+            //get user name and add to form title
+            Text += " - " + WlDataReader.GetUserName();
         }
 
         private void InitSkypeAutoRespond()
