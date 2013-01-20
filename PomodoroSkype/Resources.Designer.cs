@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PomodoroSkype.Properties {
+namespace PomodoroSkype {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PomodoroSkype.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PomodoroSkype.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PomodoroSkype.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,13 @@ namespace PomodoroSkype.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        internal static byte[] digital7mono {
+            get {
+                object obj = ResourceManager.GetObject("digital7mono", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
