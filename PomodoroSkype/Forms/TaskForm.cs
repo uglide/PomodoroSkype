@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using WLStorage = Wunderkinder.Wunderlist.Data.LocalStorage;
-using WLEntities = Wunderkinder.Wunderlist.Business.Entities;
+using PomodoroSkype.ExternalComponents;
 
-namespace PomodoroSkype
+namespace PomodoroSkype.Forms
 {
     public partial class TaskForm : Form
     {

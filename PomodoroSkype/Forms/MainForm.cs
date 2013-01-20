@@ -1,20 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Forms;
+using PomodoroSkype.ExternalComponents;
 using PomodoroSkype.Models;
 using PomodoroSkype.Properties;
 using SKYPE4COMLib;
 using TheCodeKing.ActiveButtons.Controls;
 using Timer = PomodoroSkype.Models.Timer;
-using BrightIdeasSoftware;
 
-namespace PomodoroSkype
+namespace PomodoroSkype.Forms
 {
     public partial class MainForm : Form
     {

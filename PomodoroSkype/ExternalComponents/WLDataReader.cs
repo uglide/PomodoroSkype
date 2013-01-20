@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using WLStorage = Wunderkinder.Wunderlist.Data.LocalStorage;
-using WLEntities = Wunderkinder.Wunderlist.Business.Entities;
 
-namespace PomodoroSkype
+namespace PomodoroSkype.ExternalComponents
 {
     static class WlDataReader
     {
         private const string DbDefaultPath = @"\6Wunderkinder\Wunderlist\Wunderlist.dat";
 
-        private static WLStorage.Store _store = null;
+        private static Wunderkinder.Wunderlist.Data.LocalStorage.Store _store = null;
 
 
         public static bool IsWunderListInstalled()
@@ -28,7 +23,7 @@ namespace PomodoroSkype
 
         public static void LoadData()
         {
-            var serializer = new WLStorage.CompressedXmlStoreSerializer();
+            var serializer = new Wunderkinder.Wunderlist.Data.LocalStorage.CompressedXmlStoreSerializer();
             _store = serializer.Load(GetWlDbPath());            
         }
 
@@ -42,7 +37,7 @@ namespace PomodoroSkype
             return _store.User.Name;
         }
 
-        public static WLEntities.TaskList[] GetLists()
+        public static Wunderkinder.Wunderlist.Business.Entities.TaskList[] GetLists()
         {
             if (null == _store)
             {

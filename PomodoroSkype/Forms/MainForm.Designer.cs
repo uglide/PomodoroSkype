@@ -1,4 +1,4 @@
-﻿namespace PomodoroSkype
+namespace PomodoroSkype.Forms
 {
     partial class MainForm
     {
