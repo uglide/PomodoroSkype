@@ -68,6 +68,15 @@ namespace PomodoroSkype.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error occured on loading db!.
+        /// </summary>
+        internal static string MainForm_Error_On_Db_Loading {
+            get {
+                return ResourceManager.GetString("MainForm_Error_On_Db_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
         internal static string MainForm_StartTimer_Run {

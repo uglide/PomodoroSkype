@@ -13,10 +13,11 @@ namespace PomodoroSkype.Models
         public event TimeElapsedEventHandler TimeElapsed;
         public event TimeElapsedEventHandler OnTick;
 
-        public Timer()
+        public Timer(int timeInSec)
         {
             Interval = 1000;
             Elapsed += DecreaseTime;
+            _timeInSec = timeInSec;
         }
 
         private void DecreaseTime(object source, ElapsedEventArgs e)

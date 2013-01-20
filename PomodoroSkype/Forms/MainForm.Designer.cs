@@ -273,6 +273,7 @@ namespace PomodoroSkype.Forms
             this.btnConfig.Size = new System.Drawing.Size(33, 28);
             this.btnConfig.TabIndex = 7;
             this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
             // 
             // MainForm
             // 
@@ -295,7 +296,6 @@ namespace PomodoroSkype.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PomodoroSkype";
-            this.Load += new System.EventHandler(this.MainFormLoad);
             this.tsTop.ResumeLayout(false);
             this.tsTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTasks)).EndInit();

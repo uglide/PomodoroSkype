@@ -15,11 +15,10 @@ namespace PomodoroSkype.Forms
 {
     public partial class MainForm : Form
     {
-        /*
-         * Pomodoro length in seconds
-         * TODO: move to application settings
+        /**
+         * SettingsForm loaded from db
          */
-        private const int PomadoroDurationInSec = 1500;
+        private SettingsManager settings;
 
         /**
          * Pomodoro Timer Model
@@ -35,22 +34,31 @@ namespace PomodoroSkype.Forms
          * Message template for Skype auto responds   
          */
         private string _messageTemplate;
-        
+
+        #region InitApplication
 
         public MainForm()
         {
             InitializeComponent();
+            InitSettingsManager();
+            CreateTopButtons();
+            InitTimer(); // Init after settings manager  
+            InitTasksList();
+            InitWlIntegration();            
+
+            InitSkypeAutoRespond();
         }
 
-        #region InitApplication
-
-        private void MainFormLoad(object sender, EventArgs e)
+        private void InitSettingsManager()
         {
-            CreateTopButtons();                       
-            InitTimer();
-            InitTasksList();
-            InitWlIntegration();
-            InitSkypeAutoRespond();           
+            try
+            {
+                settings = new SettingsManager();
+            } catch
+            {
+                MessageBox.Show(Resources.MainForm_Error_On_Db_Loading);
+                Close();
+            }
         }
 
         private void InitWlIntegration()
@@ -84,9 +92,11 @@ namespace PomodoroSkype.Forms
 
         private void InitTimer()
         {
-            _taskTimer = new Timer();
+            _taskTimer = new Timer(settings.Options["POMODORO_DURATION_IN_SEC"].GetInt());
             _taskTimer.OnTick += DisplayTimeEvent;
             _taskTimer.TimeElapsed += StopTimer;
+
+            DisplayTimeEvent(null, null);
         }
 
         #endregion
@@ -129,7 +139,7 @@ namespace PomodoroSkype.Forms
             }
             else
             {
-                _taskTimer.Start(PomadoroDurationInSec);
+                _taskTimer.Start(settings.Options["POMODORO_DURATION_IN_SEC"].GetInt());
 
                 SkypeWrapper.Instance.ChangeStatus(TUserStatus.cusDoNotDisturb);
 
@@ -234,6 +244,16 @@ namespace PomodoroSkype.Forms
             DialogResult dialogResult = tf.ShowDialog();
 
             Opacity = 1;
+        }
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            SettingsForm tf = new SettingsForm();
+           
+            DialogResult dialogResult = tf.ShowDialog();
+
+            settings.Reload();
+            
         }
 
     }
