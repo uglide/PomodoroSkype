@@ -19,6 +19,13 @@ Windows 7+ with installed .NET Framework 4
 
 ## WishList ##
 
+- Task bar progress-line support
+- "No tasks in progress" notifications
+- Breaks
+- Compact view
+- Project web page
+- Settings management
+- Multi lang templates
 - Unplanned tasks
 - Interruptions
 - Statistics 
