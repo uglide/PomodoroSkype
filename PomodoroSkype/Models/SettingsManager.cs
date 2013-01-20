@@ -24,27 +24,26 @@ namespace PomodoroSkype.Models
             LoadSettings();
         }
 
-        private void LoadSettings()
+        private string GetAllEntitiesQuery()
         {
-            using (SQLiteConnection db = DbHelper.Connect())
+            return @"SELECT * FROM settings";
+        }
+
+        private void LoadSettings()
+        {                
+            var reader = DbHelper.Select(GetAllEntitiesQuery());
+
+            while (reader.Read())
             {
-                SQLiteCommand query = db.CreateCommand();
-                query.CommandText = "SELECT * FROM settings";                
-                var reader = query.ExecuteReader();
-
-                while (reader.Read())
+                var option = new Option
                 {
-                    var option = new Option
-                                     {
-                                         Id = reader.GetInt32(0),
-                                         Name = reader.GetString(1),
-                                         Type = new OptionType{Value = reader.GetString(2)},
-                                         Value = reader.GetString(3)
-                                     };
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Type = new OptionType{Value = reader.GetString(2)},
+                    Value = reader.GetString(3)
+                };
 
-                    Options.Add(reader.GetString(1), option);
-                }
-                
+                Options.Add(reader.GetString(1), option);
             }
         }
 

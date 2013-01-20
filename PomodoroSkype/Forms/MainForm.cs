@@ -207,53 +207,26 @@ namespace PomodoroSkype.Forms
 
 
         private void InitTasksList()
-        {
-            
-            List<Task> tasks = new List<Task>(); 
-
-            tasks.Add(new Task
-                          {
-                              Name = "Simple test task",
-                              CompletedPomodorosCount = 0,
-                              EstimatedPomodorosCount = 2,
-                              InterruptionsCount = 0,
-                              UnplannedTasksCount = 0            
-                          }
-            );
-
-            tasks.Add(new Task
-            {
-                Name = "Second test task",
-                CompletedPomodorosCount = 8,
-                EstimatedPomodorosCount = 2,
-                InterruptionsCount = 0,
-                UnplannedTasksCount = 0,
-                Done = true
-            });
-
-            
-            olvTasks.SetObjects(tasks);        
+        { 
+            olvTasks.SetObjects(TaskManager.GetAllTasks());        
         }
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
             TaskForm tf = new TaskForm();
-
-            Opacity = 0.8;
-
             DialogResult dialogResult = tf.ShowDialog();
-
-            Opacity = 1;
         }
 
         private void btnConfig_Click(object sender, EventArgs e)
         {
-            SettingsForm tf = new SettingsForm();
-           
+            SettingsForm tf = new SettingsForm();           
             DialogResult dialogResult = tf.ShowDialog();
+            settings.Reload();            
+        }
 
-            settings.Reload();
-            
+        ~MainForm()
+        {
+            DbHelper.CloseConnection();
         }
 
     }

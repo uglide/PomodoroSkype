@@ -10,6 +10,8 @@ namespace PomodoroSkype.ExternalComponents
     {
         public const string DbDefaultPath = @".\data.db";
 
+        private static SQLiteConnection db = null;
+
         public static SQLiteConnection Connect()
         {
             var connection = new SQLiteConnection();
@@ -19,5 +21,25 @@ namespace PomodoroSkype.ExternalComponents
             return connection;
         }
 
+        public static SQLiteDataReader Select(string querySelect)
+        {
+            if (null == db)
+            {
+                db = Connect();
+            }
+
+            SQLiteCommand query = db.CreateCommand();
+            query.CommandText = querySelect;
+
+            return query.ExecuteReader();            
+        }
+
+        public static void CloseConnection()
+        {
+            if (null != db)
+            {
+                db.Close();
+            }
+        }
     }
 }

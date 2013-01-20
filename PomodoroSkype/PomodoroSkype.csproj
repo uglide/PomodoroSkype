@@ -114,6 +114,7 @@
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\SettingsManager.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TaskManager.cs" />
     <Compile Include="Models\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
