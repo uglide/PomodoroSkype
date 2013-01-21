@@ -14,26 +14,30 @@ namespace PomodoroSkype.ExternalComponents
 
         public static SQLiteConnection Connect()
         {
-            var connection = new SQLiteConnection();
-            var cs = new SQLiteConnectionStringBuilder {DataSource = DbDefaultPath};
-            connection.ConnectionString = cs.ToString();
-            connection.Open();
-            return connection;
+            if (null != db)
+            {
+                return db;
+            }
+            else
+            {
+                var connection = new SQLiteConnection();
+                var cs = new SQLiteConnectionStringBuilder {DataSource = DbDefaultPath};
+                connection.ConnectionString = cs.ToString();
+                connection.Open();
+                return connection;
+            }
         }
 
         public static SQLiteDataReader Select(string querySelect)
         {
-            if (null == db)
-            {
-                db = Connect();
-            }
-
+            db = Connect();
+         
             SQLiteCommand query = db.CreateCommand();
             query.CommandText = querySelect;
 
             return query.ExecuteReader();            
         }
-
+        
         public static void CloseConnection()
         {
             if (null != db)

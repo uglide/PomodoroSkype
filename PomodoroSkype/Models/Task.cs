@@ -10,9 +10,7 @@ namespace PomodoroSkype.Models
         public long Id { get; set; }
 
         public string Name { get; set; }
-
-        public string Description { get; set; }
-
+        
         public int EstimatedPomodorosCount { get; set; }
 
         public int InterruptionsCount { get; set; }
@@ -23,5 +21,13 @@ namespace PomodoroSkype.Models
 
         public bool Done { get; set; }
 
+        public bool Deleted { get; set; }
+
+
+
+
     }
+
+
 }
+
