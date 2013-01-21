@@ -40,25 +40,36 @@ namespace PomodoroSkype.Forms
         public MainForm()
         {
             InitializeComponent();
-            InitSettingsManager();
-            CreateTopButtons();
-            InitTimer(); // Init after settings manager  
-            InitTasksList();
-            InitWlIntegration();            
+        }
 
-            InitSkypeAutoRespond();
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                InitSettingsManager();
+                CreateTopButtons();
+                InitTimer(); // Init after settings manager  
+                InitTasksList();
+                InitWlIntegration();
+
+                InitSkypeAutoRespond();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                if (null != _taskTimer)
+                {
+                    _taskTimer.Stop();
+                }
+
+                Close();
+            }
         }
 
         private void InitSettingsManager()
         {
-            try
-            {
-                settings = new SettingsManager();
-            } catch
-            {
-                MessageBox.Show(Resources.MainForm_Error_On_Db_Loading);
-                Close();
-            }
+            settings = new SettingsManager();            
         }
 
         private void InitWlIntegration()
