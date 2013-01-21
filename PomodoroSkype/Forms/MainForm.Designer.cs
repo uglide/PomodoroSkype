@@ -296,6 +296,7 @@ namespace PomodoroSkype.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PomodoroSkype";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tsTop.ResumeLayout(false);
             this.tsTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTasks)).EndInit();
