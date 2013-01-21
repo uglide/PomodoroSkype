@@ -1,11 +1,11 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace PomodoroSkype.Models
 {
-    class Task
+    class Task : ITask
     {
         public long Id { get; set; }
 
@@ -23,11 +23,6 @@ namespace PomodoroSkype.Models
 
         public bool Deleted { get; set; }
 
-
-
-
     }
-
-
 }
 
