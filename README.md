@@ -36,6 +36,7 @@ Windows 7+ with installed .NET Framework 4
 - End User documentation
 - Report with completed tasks (with export to txt & csv/xls)
 - Rebuild app using MVVM & WPF
+- Create Mono port for Linux
 
 
 
