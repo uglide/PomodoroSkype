@@ -29,33 +29,35 @@ namespace PomodoroSkype.Models
             var paramNames = new List<string>();
 
             var properties = t.GetType().GetProperties();
-            var db = DbHelper.Connect();
-            SQLiteCommand command = db.CreateCommand();
-            var fieldsMapping = GetFieldsMapping();
-
-            foreach (var prop in properties)
+            using (var db = DbHelper.Connect())
             {
-                //prop.Name, 
-                var propName = prop.Name;
-                
+                SQLiteCommand command = db.CreateCommand();
+                var fieldsMapping = GetFieldsMapping();
 
-                var fieldName =
-                    from field in fieldsMapping
-                     where field.PropertyName == propName && !field.PrimaryKey
-                     select field;
+                foreach (var prop in properties)
+                {
+                    //prop.Name, 
+                    var propName = prop.Name;
 
-                if (!fieldName.Any()) continue;
 
-                fieldNames.Add(fieldName.First().FieldName);
-                paramNames.Add("@Param" + propName);
-                command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(t, null));
-            }
+                    var fieldName =
+                        from field in fieldsMapping
+                        where field.PropertyName == propName && !field.PrimaryKey
+                        select field;
 
-            command.CommandText = @"INSERT INTO "
-                                  + Table + " ( " + String.Join(",", fieldNames)
-                                  + ") VALUES (" + String.Join(",", paramNames) + ")";
+                    if (!fieldName.Any()) continue;
 
-            return command.ExecuteNonQuery();
+                    fieldNames.Add(fieldName.First().FieldName);
+                    paramNames.Add("@Param" + propName);
+                    command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(t, null));
+                }
+
+                command.CommandText = @"INSERT INTO "
+                                      + Table + " ( " + String.Join(",", fieldNames)
+                                      + ") VALUES (" + String.Join(",", paramNames) + ")";
+
+                return command.ExecuteNonQuery();    
+            }                       
         }
 
     }
