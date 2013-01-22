@@ -44,43 +44,47 @@ namespace PomodoroSkype.Models
          * Query builder
          */
         private int BuildQueryFromObjectAndExecute(object model, string queryType = InsertQuery)
-        {                        
-            using (var db = DbHelper.Connect())
+        {
+            var db = DbHelper.Connect();
+            
+            SQLiteCommand command = db.CreateCommand();
+            var fieldsMapping = GetFieldsMapping();
+            var properties = model.GetType().GetProperties();
+
+            var fieldNames = new List<string>();
+            var paramNames = new List<string>();
+
+            foreach (var prop in properties)
             {
-                SQLiteCommand command = db.CreateCommand();
-                var fieldsMapping = GetFieldsMapping();
-                var properties = model.GetType().GetProperties();
+                var propName = prop.Name;
+                var fieldName =
+                    from field in fieldsMapping
+                    where field.PropertyName == propName
+                    select field;
 
-                var fieldNames = new List<string>();
-                var paramNames = new List<string>();
+                var dbFeildMaps = fieldName as DbFeildMap[] ?? fieldName.ToArray();
+                if (!dbFeildMaps.Any()) continue;
 
-                foreach (var prop in properties)
+                var fieldData = dbFeildMaps.First();
+                if (!fieldData.PrimaryKey)
                 {
-                    var propName = prop.Name;
-                    var fieldName =
-                        from field in fieldsMapping
-                        where field.PropertyName == propName && !field.PrimaryKey
-                        select field;
-
-                    var dbFeildMaps = fieldName as DbFeildMap[] ?? fieldName.ToArray();
-                    if (!dbFeildMaps.Any()) continue;
-
-                    fieldNames.Add(dbFeildMaps.First().FieldName);
+                    fieldNames.Add(fieldData.FieldName);
                     paramNames.Add("@Param" + propName);
-                    command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(model, null));
                 }
+                command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(model, null));
+            }
 
-                if (queryType == InsertQuery)
-                {
-                    command.CommandText = BuildInsertQuery(fieldNames, paramNames);
+            if (queryType == InsertQuery)
+            {
+                command.CommandText = BuildInsertQuery(fieldNames, paramNames);
 
-                } else if (queryType == UpdateQuery)
-                {
-                    command.CommandText = BuildUpdateQuery(fieldNames, paramNames);
-                }
+            } else if (queryType == UpdateQuery)
+            {
+                command.CommandText = BuildUpdateQuery(fieldNames, paramNames);
+            }
 
-                return command.ExecuteNonQuery();
-            } 
+            return command.ExecuteNonQuery();
+             
         }
 
         private string BuildInsertQuery(IEnumerable<string> fieldNames, IEnumerable<string> paramNames)
@@ -104,9 +108,9 @@ namespace PomodoroSkype.Models
 
             var pk = dbFeildMaps.First();
 
-            return @"UPDATE TABLE " + Table + " SET "
+            return @"UPDATE " + Table + " SET "
                     + String.Join(", ", fieldNames.Zip(paramNames, (field, param) => field + "=" + param).ToArray())
-                    + " WHERE " + pk.FieldName + "=" + pk.PropertyName;
+                    + " WHERE " + pk.FieldName + "=@Param" + pk.PropertyName;
         }
     }
     

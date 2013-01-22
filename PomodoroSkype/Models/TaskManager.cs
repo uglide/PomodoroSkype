@@ -27,16 +27,19 @@ namespace PomodoroSkype.Models
         private static string GetAllEntitiesQuery()
         {
             return @"SELECT 
-	                t.id, t.name, t.estimated, 
-	                COUNT(p.id) as pomodorosCount, 
-	                COUNT(i.id) as interruptionsCount,
-	                COUNT(un.id) as unplannedTasksCount
-                FROM tasks as t 
-	                LEFT JOIN pomodoros as p ON t.id = p.taskId
-	                LEFT JOIN interruptions as i ON t.id = i.taskId
-	                LEFT JOIN unplanned_tasks as un ON t.id = un.sourceTaskId
-                WHERE
-		            t.deleted <> 1";
+			            t.id, t.name, t.estimated, 	                
+			            (SELECT COUNT(p.id) 
+					            FROM pomodoros as p 
+					            WHERE t.id = p.taskId)  as pomodorosCount,
+			            (SELECT COUNT(i.id) 
+					            FROM interruptions as i 
+					            WHERE t.id = i.taskId)  as interruptionsCount,
+			            (SELECT COUNT(un.id)
+					            FROM unplanned_tasks as un 
+					            WHERE t.id = un.sourceTaskId
+			            ) as unplannedTasksCount
+		            FROM tasks as t 
+		            WHERE t.deleted <> 1";
         }
 
         public static List<Task> GetAllTasks()

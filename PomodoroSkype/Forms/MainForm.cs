@@ -27,6 +27,7 @@ namespace PomodoroSkype.Forms
 
         /*
          * File where stored message template for Skype auto responds  
+         * TODO: remove this
          */
         private const string PomadoroTemplateFileName = "pomodoroSkype.ini";
 
@@ -35,12 +36,22 @@ namespace PomodoroSkype.Forms
          */
         private string _messageTemplate;
 
-        #region InitApplication
+        /*
+         * Task selected for pomodoro
+         */
+        private Task _currentTask;        
 
         public MainForm()
         {
             InitializeComponent();
         }
+
+        ~MainForm()
+        {
+            DbHelper.CloseConnection();
+        }
+
+        #region InitApplication
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -49,7 +60,7 @@ namespace PomodoroSkype.Forms
                 InitSettingsManager();
                 CreateTopButtons();
                 InitTimer(); // Init after settings manager  
-                InitTasksList();
+                ReloadTasksList();
                 InitWlIntegration();
 
                 InitSkypeAutoRespond();
@@ -217,8 +228,8 @@ namespace PomodoroSkype.Forms
         #endregion
 
 
-        private void InitTasksList()
-        { 
+        private void ReloadTasksList()
+        {             
             olvTasks.SetObjects(TaskManager.GetAllTasks());        
         }
 
@@ -226,6 +237,7 @@ namespace PomodoroSkype.Forms
         {
             TaskForm tf = new TaskForm();
             DialogResult dialogResult = tf.ShowDialog();
+            ReloadTasksList();
         }
 
         private void btnConfig_Click(object sender, EventArgs e)
@@ -235,10 +247,29 @@ namespace PomodoroSkype.Forms
             settings.Reload();            
         }
 
-        ~MainForm()
+        private void olvTasks_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            DbHelper.CloseConnection();
+            if (null != olvTasks.SelectedObject)
+            {
+                Task selectedObject = (Task)olvTasks.SelectedObject;
+                SetCurrentTask(ref selectedObject);
+            }
         }
 
+        private void SetCurrentTask(ref Task t)
+        {
+            _currentTask = t;
+            lbCurrentTask.Text = _currentTask.Name;
+        }
+
+        private void olvTasks_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {            
+            var updatedTask = (Task) e.RowObject;
+            updatedTask.EstimatedPomodorosCount = Convert.ToInt32(e.NewValue);            
+
+            if (!updatedTask.IsValid()) return;
+
+            int update = TaskManager.Instance.Update(updatedTask);
+        }
     }
 }

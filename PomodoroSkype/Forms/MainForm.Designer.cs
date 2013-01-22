@@ -179,6 +179,8 @@ namespace PomodoroSkype.Forms
             this.olvTasks.TabIndex = 4;
             this.olvTasks.UseCompatibleStateImageBehavior = false;
             this.olvTasks.View = System.Windows.Forms.View.Details;
+            this.olvTasks.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.olvTasks_CellEditFinishing);
+            this.olvTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.olvTasks_MouseDoubleClick);
             // 
             // colTask
             // 

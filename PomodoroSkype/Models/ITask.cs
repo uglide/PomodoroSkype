@@ -11,13 +11,13 @@ namespace PomodoroSkype.Models
 
         string Name { get; set; }
 
-        int EstimatedPomodorosCount { get; set; }
+        long EstimatedPomodorosCount { get; set; }
 
-        int InterruptionsCount { get; set; }
+        long InterruptionsCount { get; set; }
 
-        int CompletedPomodorosCount { get; set; }
+        long CompletedPomodorosCount { get; set; }
 
-        int UnplannedTasksCount { get; set; }
+        long UnplannedTasksCount { get; set; }
 
         bool Done { get; set; }
 

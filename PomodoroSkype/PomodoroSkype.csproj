@@ -152,9 +152,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="data.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="data.db" />
     <None Include="dataDataSet.xsc">
       <DependentUpon>dataDataSet.xsd</DependentUpon>
     </None>

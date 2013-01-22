@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using PomodoroSkype.ExternalComponents;
+using PomodoroSkype.Models;
 
 namespace PomodoroSkype.Forms
 {
@@ -46,7 +47,7 @@ namespace PomodoroSkype.Forms
         }
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void CloseFormBtnClick(object sender, EventArgs e)
         {
             Close();
         }
@@ -54,6 +55,25 @@ namespace PomodoroSkype.Forms
         private void cbTaskLists_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadTasks(cbTaskLists.SelectedItem.ToString());
+        }
+
+        private void AddTaskBtnClick(object sender, EventArgs e)
+        {
+
+            string taskName = cbTasks.SelectedItem.ToString();
+            int estimation = Convert.ToInt32(nudEstimation.Value);            
+
+            var newTask = new Task
+                              {
+                                  Name = taskName,
+                                  EstimatedPomodorosCount = estimation
+                              };
+
+            if (newTask.IsValid())
+            {
+                TaskManager.Instance.Add(newTask);
+                Close();
+            }
         }
     }
 }

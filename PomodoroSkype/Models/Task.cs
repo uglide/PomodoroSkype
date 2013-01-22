@@ -11,17 +11,23 @@ namespace PomodoroSkype.Models
 
         public string Name { get; set; }
         
-        public int EstimatedPomodorosCount { get; set; }
+        public long EstimatedPomodorosCount { get; set; }
 
-        public int InterruptionsCount { get; set; }
+        public long InterruptionsCount { get; set; }
 
-        public int CompletedPomodorosCount { get; set; }
+        public long CompletedPomodorosCount { get; set; }
 
-        public int UnplannedTasksCount { get; set; }
+        public long UnplannedTasksCount { get; set; }
 
         public bool Done { get; set; }
 
         public bool Deleted { get; set; }
+
+        public bool IsValid()
+        {
+            return (EstimatedPomodorosCount > 0 && EstimatedPomodorosCount < 9) 
+                && Name.Length > 0;
+        }
 
     }
 }
