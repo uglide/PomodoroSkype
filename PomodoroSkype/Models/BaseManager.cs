@@ -9,6 +9,10 @@ namespace PomodoroSkype.Models
 {
     abstract class BaseManager
     {
+
+        public const string InsertQuery = "insert";
+        public const string UpdateQuery = "update"; 
+
         /*
          * Db fields mapping
          */
@@ -25,43 +29,87 @@ namespace PomodoroSkype.Models
          */
         public int Add(Object t)
         {
-            var fieldNames = new List<string>();
-            var paramNames = new List<string>();
+            return BuildQueryFromObjectAndExecute(t, InsertQuery);
+        }
 
-            var properties = t.GetType().GetProperties();
+        /*
+         * Update model in db
+         */
+        public int Update(Object t)
+        {
+            return BuildQueryFromObjectAndExecute(t, UpdateQuery);
+        }
+
+        /*
+         * Query builder
+         */
+        private int BuildQueryFromObjectAndExecute(object model, string queryType = InsertQuery)
+        {                        
             using (var db = DbHelper.Connect())
             {
                 SQLiteCommand command = db.CreateCommand();
                 var fieldsMapping = GetFieldsMapping();
+                var properties = model.GetType().GetProperties();
+
+                var fieldNames = new List<string>();
+                var paramNames = new List<string>();
 
                 foreach (var prop in properties)
                 {
-                    //prop.Name, 
                     var propName = prop.Name;
-
-
                     var fieldName =
                         from field in fieldsMapping
                         where field.PropertyName == propName && !field.PrimaryKey
                         select field;
 
-                    if (!fieldName.Any()) continue;
+                    var dbFeildMaps = fieldName as DbFeildMap[] ?? fieldName.ToArray();
+                    if (!dbFeildMaps.Any()) continue;
 
-                    fieldNames.Add(fieldName.First().FieldName);
+                    fieldNames.Add(dbFeildMaps.First().FieldName);
                     paramNames.Add("@Param" + propName);
-                    command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(t, null));
+                    command.Parameters.AddWithValue("@Param" + propName, prop.GetValue(model, null));
                 }
 
-                command.CommandText = @"INSERT INTO "
-                                      + Table + " ( " + String.Join(",", fieldNames)
-                                      + ") VALUES (" + String.Join(",", paramNames) + ")";
+                if (queryType == InsertQuery)
+                {
+                    command.CommandText = BuildInsertQuery(fieldNames, paramNames);
 
-                return command.ExecuteNonQuery();    
-            }                       
+                } else if (queryType == UpdateQuery)
+                {
+                    command.CommandText = BuildUpdateQuery(fieldNames, paramNames);
+                }
+
+                return command.ExecuteNonQuery();
+            } 
         }
 
-    }
+        private string BuildInsertQuery(IEnumerable<string> fieldNames, IEnumerable<string> paramNames)
+        {
+            return @"INSERT INTO "
+                            + Table + " ( " + String.Join(",", fieldNames)
+                            + ") VALUES (" + String.Join(",", paramNames) + ")";
+        }
 
+        private string BuildUpdateQuery(IEnumerable<string> fieldNames, IEnumerable<string> paramNames)
+        {
+            var fieldsMapping = GetFieldsMapping();
+
+            var primaryKey =
+                    from field in fieldsMapping
+                    where field.PrimaryKey
+                    select field;
+
+            var dbFeildMaps = primaryKey as DbFeildMap[] ?? primaryKey.ToArray();
+            if (!dbFeildMaps.Any()) throw new Exception("Primary Key not founded in fields mapping!");
+
+            var pk = dbFeildMaps.First();
+
+            return @"UPDATE TABLE " + Table + " SET "
+                    + String.Join(", ", fieldNames.Zip(paramNames, (field, param) => field + "=" + param).ToArray())
+                    + " WHERE " + pk.FieldName + "=" + pk.PropertyName;
+        }
+    }
+    
     internal class DbFeildMap
     {
         public string PropertyName;

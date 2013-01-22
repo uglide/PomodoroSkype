@@ -4,3 +4,5 @@ obj
 _ReSharper.PomodoroSkype
 # mstest test results
 TestResults
+PomodoroSkype.sln.DotSettings.user
+PomodoroSkype.suo
